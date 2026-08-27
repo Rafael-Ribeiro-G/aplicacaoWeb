@@ -18,7 +18,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+
 public class Image {
+    @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     @Column
