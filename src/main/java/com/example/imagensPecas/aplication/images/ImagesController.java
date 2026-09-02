@@ -1,5 +1,6 @@
 package com.example.imagensPecas.aplication.images;
 
+import com.example.imagensPecas.domain.service.ImageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,9 @@ import java.util.List;
 @RequestMapping("/v1/images")
 @Slf4j
 public class ImagesController {
+
+    private ImageService service;
+
     @PostMapping
     public ResponseEntity save(
             @RequestParam("file")MultipartFile file,
@@ -22,8 +26,9 @@ public class ImagesController {
     )
     {
         log.info("Imagem recebida: name: {}, size: {}", file.getOriginalFilename(), file.getSize());
-        log.info("Nome definido para a imagem: {}", name);
-        log.info("Tags: {}", tags);
+        //log.info("Nome definido para a imagem: {}", name);
+        //log.info("Tags: {}", tags);
+        log.info("Content type: {}", file.getContentType());
         return ResponseEntity.ok().build();
     }
 }
