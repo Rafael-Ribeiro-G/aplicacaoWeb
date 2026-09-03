@@ -1,7 +1,10 @@
 package com.example.imagensPecas.aplication.images;
 
+import com.example.imagensPecas.domain.entity.Image;
+import com.example.imagensPecas.domain.enums.ImageExtension;
 import com.example.imagensPecas.domain.service.ImageService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +29,16 @@ public class ImagesController {
     )
     {
         log.info("Imagem recebida: name: {}, size: {}", file.getOriginalFilename(), file.getSize());
+
+        Image image = Image.builder()
+                .name(name)
+                .tags(String.join(",", tags))
+                .size(file.getSize())
+                .extension(ImageExtension.valueOf(MediaType.valueOf(file.getContentType())))
+                .file(file.getBytes())
+                .build();
+        service.save(image);
+
         //log.info("Nome definido para a imagem: {}", name);
         //log.info("Tags: {}", tags);
         log.info("Content type: {}", file.getContentType());
